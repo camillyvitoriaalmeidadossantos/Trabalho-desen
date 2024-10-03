@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include_once('quadrado.php');
+    include_once('triangulo.php');
     
 ?>
 
@@ -9,12 +9,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quadrado</title>
+    <title>Triângulo</title>
 </head>
 <body>
-    <h1>Crud do Quadrado</h1>
+    <h1>Crud do Triângulo</h1>
     <h3><?= $msg ?></h3>
-    <a href="cadastro.php">Novo</a>
+    <a href="./cadastrotri.php">Novo</a>
 
     <!-- Formulário de pesquisa -->
     <form action="" method="get">
@@ -26,9 +26,11 @@
             <select name="tipo" id="tipo">
                 <option value="0">Escolha</option>
                 <option value="1">Id</option>
-                <option value="2">Lado</option>
-                <option value="3">Cor</option>
-                <option value="4">Unidade</option>
+                <option value="2">LadoA</option>
+                <option value="3">LadoB</option>
+                <option value="4">LadoC</option>
+                <option value="5">Cor</option>
+                <!-- <option value="4">Unidade</option> -->
             </select>
             <button type='submit'>Buscar</button>
         </fieldset>
@@ -38,7 +40,10 @@
     <table>
         <tr>
             <th>Id</th>
-            <th>Tamanho</th>
+            <th>LadoA</th>
+            <th>LadoB</th>
+            <th>LadoC</th>
+            <!-- <th>Tamanho</th> -->
             <th>Cor</th>
             <th>Un</th>
             <th>Alterar</th>
@@ -48,15 +53,17 @@
         if (!empty($lista)) {
             foreach($lista as $forma) {
                 echo "<tr>
-                        <td>{$forma->getIdQuad()}</td>
-                        <td>{$forma->getLado()}</td>
-                        <td>{$forma->getCor()}</td>
-                        <td>{$forma->getUnidade()->getUnidade()}</td>
-                        <td>
-                            <a href='calcular.php?id_quad={$forma->getIdQuad()}&lado={$forma->getLado()}'>Visualizar</a> |
-                            <a href='cadastro.php?id_quad={$forma->getIdQuad()}'>Editar</a>
-                        </td>
-                    </tr>";
+        <td>{$forma->getIdTri()}</td>
+        <td>{$forma->getLadoA()}</td>
+        <td>{$forma->getLadoB()}</td>
+        <td>{$forma->getLadoC()}</td>
+        <td>{$forma->getCor()}</td>
+        <td>{$forma->getUnidade()->getUnidade()}</td>
+        <td>
+            <a href='calcular.php?id_tri={$forma->getIdTri()}&ladoA={$forma->getLadoA()}&ladoB={$forma->getLadoB()}&ladoC={$forma->getLadoC()}'>Visualizar</a> |
+            <a href='cadastrotri.php?id_tri={$forma->getIdTri()}'>Editar</a>
+        </td>
+    </tr>";
             }
         } 
         ?>

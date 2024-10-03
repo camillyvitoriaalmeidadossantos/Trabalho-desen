@@ -3,24 +3,24 @@ require_once("../classes/Database.class.php");
 require_once("../classes/unidade.class.php");
 require_once("../classes/formas.class.php");
 
-class Quadrado {
-    private $id_quad;
-    private $lado;
+class Circulo {
+    private $id_cir;
+    private $raio;
     private $cor;
     private $unidade;
 
-    public function __construct($id_quad = 0, $lado = 0, $cor = "", unidade $unidade ) { 
-        $this->setIdQuad($id_quad);
+    public function __construct($id_cir = 0, $raio = 0, $cor = "", unidade $unidade ) { 
+        $this->setIdCir($id_cir);
         $this->setUnidade($unidade);
-        $this->setLado($lado); 
+        $this->setRaio($raio); 
         $this->setCor($cor);
     }
 
-    public function setIdQuad($novoIdQuad) { 
-        if ($novoIdQuad < 0) {
+    public function setIdCir($novoIdCir) { 
+        if ($novoIdCir < 0) {
             throw new Exception("Erro: ID inválido!");
         } else {
-            $this->id_quad = $novoIdQuad; 
+            $this->id_cir = $novoIdCir; 
         }
     }
 
@@ -32,11 +32,11 @@ class Quadrado {
         }
     }
 
-    public function setLado($novoLado) {
-        if ($novoLado <= 0) {
-            throw new Exception("Erro: Lado inválido!");
+    public function setRaio($novoRaio) {
+        if ($novoRaio <= 0) {
+            throw new Exception("Erro: Raio inválido!");
         } else {
-            $this->lado = $novoLado;
+            $this->raio = $novoRaio;
         }
     }
 
@@ -48,54 +48,51 @@ class Quadrado {
         }
     }
 
-    public function getIdQuad() { return $this->id_quad; }
+    public function getIdCir() { return $this->id_cir; }
     public function getUnidade() { return $this->unidade; }
-    public function getLado() { return $this->lado; }
+    public function getRaio() { return $this->raio; }
     public function getCor() { return $this->cor; }
 
     public function incluir() {
-        $sql = 'INSERT 
-                INTO Quadrado (id_un, lado, cor)
-                VALUES (:id_un, :lado, :cor)';
+        $sql = 'INSERT INTO Circulo (id_un, raio, cor)
+                VALUES (:id_un, :raio, :cor)';
         $parametros = [
             ':id_un' => $this->unidade->getIdUn(),
-            ':lado' => $this->lado,
+            ':raio' => $this->raio,
             ':cor' => $this->cor
         ];
         Database::executar($sql, $parametros);
     }
 
     public function excluir() {
-        $sql = 'DELETE 
-                FROM Quadrado 
-                WHERE id_quad = :id_quad';
+        $sql = 'DELETE FROM Circulo WHERE id_cir = :id_cir';
         $parametros = [
-            ':id_quad' => $this->id_quad
+            ':id_cir' => $this->id_cir
         ];
         Database::executar($sql, $parametros);
     }
 
     public function alterar() {
-        $sql = 'UPDATE Quadrado 
-                   SET cor = :cor, lado = :lado, id_un = :id_un
-                 WHERE id_quad = :id_quad';
+        $sql = 'UPDATE Circulo 
+                   SET cor = :cor, raio = :raio, id_un = :id_un
+                 WHERE id_cir = :id_cir';
         $parametros = [
-            ':id_quad' => $this->id_quad,
+            ':id_cir' => $this->id_cir,
             ':cor' => $this->cor,
-            ':lado' => $this->lado,
+            ':raio' => $this->raio,
             ':id_un' => $this->unidade->getIdUn()
         ];
         Database::executar($sql, $parametros);
     }
 
     public static function listar($tipo = 0, $busca = "") {
-        $sql = "SELECT * FROM Quadrado";
+        $sql = "SELECT * FROM Circulo";
         $parametros = [];
 
         if ($tipo > 0) {
             switch($tipo) {
-                case 1: $sql .= " WHERE id_quad = :busca"; break;
-                case 2: $sql .= " WHERE lado LIKE :busca"; $busca = "%{$busca}%"; break;
+                case 1: $sql .= " WHERE id_cir = :busca"; break;
+                case 2: $sql .= " WHERE raio LIKE :busca"; $busca = "%{$busca}%"; break;
                 case 3: $sql .= " WHERE cor LIKE :busca"; $busca = "%{$busca}%"; break;
                 case 4: $sql .= " WHERE id_un = :busca"; break;
             }
@@ -107,21 +104,21 @@ class Quadrado {
 
         while ($registro = $comando->fetch(PDO::FETCH_ASSOC)) {
             $unidade = new unidade($registro['id_un']); // Criar objeto Unidade
-            $quadrado = new Quadrado($registro['id_quad'], $registro['lado'], $registro['cor'], $unidade);
-            array_push($formas, $quadrado);
+            $circulo = new Circulo($registro['id_cir'], $registro['raio'], $registro['cor'], $unidade);
+            array_push($formas, $circulo);
         }
         return $formas;
     }
 
-    public function Desenhar() {
-        return "<div style='width: {$this->lado}px; height: {$this->lado}px; background-color: #007bff; display: inline-block; margin: 20px;'></div>";
+    public function DesenharCirculo() {
+        return "<div style='display:block; width:{$this->raio}px; height:{$this->raio}px; background-color:{$this->cor}; border-radius:50%;'></div>";
     }
     public function calcularArea() {
-        return $this->getLado() * $this->getLado();
+        return $this->getRaio() * $this->getRaio();
     }
 
     public function calcularPerimetro() {
-        return 4 * $this->getLado();
+        return 4 * $this->getRaio();
     }
 }
 ?>

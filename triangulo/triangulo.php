@@ -1,11 +1,13 @@
 <?php
-require_once("../classes/Quadrado.class.php");
+require_once("../classes/triangulo1.class.php");
 require_once("../classes/unidade.class.php");
     
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-        $id_quad =  isset($_POST['id_quad']) ? $_POST['id_quad']:0; 
-        $lado =  isset($_POST['lado']) ? $_POST['lado']:0; 
+        $id_tri =  isset($_POST['id_tri']) ? $_POST['id_tri']:0; 
+        $ladoA =  isset($_POST['ladoA']) ? $_POST['ladoA']:0; 
+        $ladoB =  isset($_POST['ladoB']) ? $_POST['ladoB']:0; 
+        $ladoC =  isset($_POST['ladoC']) ? $_POST['ladoC']:0; 
         $cor =  isset($_POST['cor']) ? $_POST['cor']:""; 
         $unidade =  isset($_POST['unidade']) ? $_POST['unidade']:0; 
         $arquivo = isset($_FILES['fundo'])?$_FILES['fundo']:"";
@@ -14,17 +16,17 @@ require_once("../classes/unidade.class.php");
     
     try{
         $unidade = unidade::listar(1,$unidade)[0];
-        $quadrado = new Quadrado($id_quad,$lado,$cor, $unidade, $destino);
+        $triangulo = new Triangulo($id_tri,$ladoA, $ladoB, $ladoC,$cor, $unidade, $destino);
         
     $resultado = "";
             if($acao == 'salvar'){
-                if($id_quad > 0) 
-                $resultado = $quadrado->alterar();
+                if($id_tri > 0) 
+                $resultado = $triangulo->alterar();
             else 
-                $resultado = $quadrado->incluir();
+                $resultado = $triangulo->incluir();
 
             }elseif ($acao == 'excluir'){ //excluindo
-                $resultado = $quadrado->excluir();
+                $resultado = $triangulo->excluir();
             }
             $_SESSION['MSG'] = "Dados inseridos/Alterados com sucesso!";
             move_uploaded_file($arquivo['tmp_name'],$destino);
@@ -36,19 +38,18 @@ require_once("../classes/unidade.class.php");
             header('location: index.php');
        }
          }elseif($_SERVER['REQUEST_METHOD'] == 'GET'){ 
-            $id_quad =  isset($_GET['id_tri'])?$_GET['id_tri']:0; 
+            $id_tri =  isset($_GET['id_tri'])?$_GET['id_tri']:0; 
             $msg = (isset($_SESSION['MSG'])?$_SESSION['MSG']:"");
             if ($msg != ""){
                 echo "<h2>{$msg}</h2>";
-                unset($_SESSION['MSG']);
             }
    
-            if ($id_quad > 0){
-                $forma = Quadrado::listar(1,$id_quad)[0];                                          
+            if ($id_tri > 0){
+                $forma = Triangulo::listar(1,$id_tri)[0];                                          
             }
             
                 $busca =  isset($_GET['busca']) ? $_GET['busca']:0; 
                 $tipo =  isset($_GET['tipo']) ? $_GET['tipo']:0; 
-                $lista = Quadrado::listar($tipo,$busca);
+                $lista = Triangulo::listar($tipo,$busca);
             }
 ?>

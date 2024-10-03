@@ -1,91 +1,104 @@
 <?php
 require_once("../classes/Database.class.php");
-class Unidade{
-    // Atributos da classe - informações que a classe irá controlar/manter
-    private $id_un; // atributos privados podem ser lidos e escritos somente pelos membros da classe, públicos pode ser manipulados por qualquer outro objeto/programa
-    private $descr; 
-   
-    public function __construct($id_un = 0, $descr = "null"){
-        $this->setIdUn($id_un); // chama os métodos da classe para definir os valores dos atributos, enviando os parâmetros recebidos no construtor, em vez de atribuir direto, assim passa pelas regras de negócio
-        $this->setDescr($descr);
-    }
-    public function setIdUn($novoId){
-        if ($novoId < 0)
-            throw new Exception("Erro: id inválido!"); //dispara uma exceção
-        else
-            $this->id_un = $novoId;
-    }
-    // função que define (set) o valor de um atributo
-    public function setDescr($novodescr){
-        if ($novodescr == "")
-            throw new Exception("Erro: Descrição inválida!");
-        else
-            $this->descr = $novodescr;
-    }
-    public function getIdUn(){ return $this->id_un;}
-    public function getDescr() { return $this->descr;}
 
-    /***
-     * Inclui uma pessoa no banco  */     
-    public function incluir(){
-        // abrir conexão com o banco de dados
-        $conexao = Database::getInstance(); // chama o método getInstance da classe Database de forma estática para abrir conexão com o banco de dados
-        $sql = 'INSERT INTO Unidade (descr)
-                     VALUES (:descr)';
-        $formas = $conexao->prepare($sql);  // prepara o formas para executar no banco de dados
-        $formas->bindValue(':descr',$this->descr); // vincula os valores com o formas do banco de dados
-        return $formas->execute(); // executa o formas
-    }    
-    /** Método para excluir uma pessoa do banco de dados */
-    public function excluir(){
-        $conexao = Database::getInstance();
-        $sql = 'DELETE 
-                  FROM Unidade
-                 WHERE id_un = :id_un';
-        $formas = $conexao->prepare($sql); 
-        $formas->bindValue(':id_un',$this->id_un);
-        return $formas->execute();
-    }  
-    /**
-     * Essa função altera os dados de uma pessoa no banco de dados
-     */
-    public function alterar(){
-        $conexao = Database::getInstance();
-        $sql = 'UPDATE Unidade 
-                   SET descr = :descr
-                 WHERE id_un = :id_un';
-                 $formas = $conexao->prepare($sql); 
-                 $formas->bindValue(':descr',$this->descr);
-                 return $formas->execute();
-        }    
-    //** Método estático para listar pessoas - nesse caso não precisa criar um objeto Pessoa para poder chamar esse método */
-    public static function listar($tipo = 0, $busca = "" ){
-        $conexao = Database::getInstance();
-        // montar consulta
-        $sql = "SELECT * FROM Unidade";        
-        if ($tipo > 0 )
-            switch($tipo){
-                case 1: $sql .= " WHERE id_un = :busca"; break;
-                case 2: $sql .= " WHERE descr like :busca"; $busca = "%{$busca}%"; break;
-            }
+class unidade {
+    private $id_un;
+    private $unidade;
 
-        // prepara o comando
-        $formas = $conexao->prepare($sql); // preparar formas
-        // vincular os parâmetros
-        if ($tipo > 0 )
-            $formas->bindValue(':busca',$busca);
+    // Construtor
+    public function __construct($id_un = 0, $unidade = "null") {
+        $this->setIdUn($id_un);
+        $this->setUnidade($unidade); // Isso pode gerar um erro se $unidade for null
+    }
 
-        // executar consulta
-        $formas->execute(); // executar formas
-        $descr = array(); // cria um vetor para armazenar o resultado da busca
-        // listar o resultado da consulta         
-        while($registro = $formas->fetch()){
-            $unidade = new Unidade($registro['id_un'],$registro['descr']); // cria um objeto pessoa com os dados que vem do banco
-            array_push($descr,$unidade); // armazena no vetor pessoas
+    // Setters
+    public function setIdUn($novoIdUn) {
+        if ($novoIdUn < 0) {
+            throw new Exception("Erro: id inválido!");
+        } else {
+            $this->id_un = $novoIdUn;
         }
-        return $descr;  // retorna o vetor pessoas com uma coleção de objetos do tipo Pessoa
-       
-    }    
-}
+    }
 
+    public function setUnidade($novoUnidade) {
+        if ($novoUnidade === "" || is_null($novoUnidade)) {
+            throw new Exception("Erro: Unidade inválida!");
+        } else {
+            $this->unidade = $novoUnidade;
+        }
+    }
+
+    // Getters
+    public function getIdUn() { 
+        return $this->id_un;
+    }
+
+    public function getUnidade() { 
+        return $this->unidade;
+    }
+
+    // Método para incluir nova unidade
+    public function incluir() {
+        $sql = 'INSERT INTO unidade (unidade) VALUES (:unidade)';
+        $parametros = array(':unidade' => $this->getUnidade());
+        Database::executar($sql, $parametros);
+    }
+
+    // Método para excluir unidade
+    public function excluir() {
+        $sql = 'DELETE FROM unidade WHERE id_un = :id_un';
+        $parametros = array(':id_un' => $this->getIdUn());
+        return Database::executar($sql, $parametros);
+    }
+
+    // Método para alterar unidade
+    public function alterar() {
+        $sql = 'UPDATE unidade SET unidade = :unidade WHERE id_un = :id_un';
+        $parametros = array(
+            ':id_un' => $this->getIdUn(),
+            ':unidade' => $this->getUnidade()
+        );
+        Database::executar($sql, $parametros);
+        return true;
+    }
+
+    // Método para listar unidades
+    public static function listar($tipo = 0, $busca = "") {
+        $sql = "SELECT * FROM unidade";
+        $parametros = array();
+
+        if ($tipo > 0) {
+            switch ($tipo) {
+                case 1:
+                    $sql .= " WHERE id_un = :busca";
+                    $parametros = array(':busca' => $busca);
+                    break;
+                case 2:
+                    $sql .= " WHERE unidade LIKE :busca";
+                    $busca = "%{$busca}%";
+                    $parametros = array(':busca' => $busca);
+                    break;
+            }
+        }
+
+        // Executa a query e coleta os resultados
+        $comando = Database::executar($sql, $parametros);
+        $unidades = array();
+        
+        while ($registro = $comando->fetch(PDO::FETCH_ASSOC)) {
+            if (isset($registro['unidade'])) {
+                // Aqui garantimos que o valor não é nulo
+                if (!is_null($registro['unidade']) && $registro['unidade'] !== "") {
+                    $unidade = new unidade($registro['id_un'], $registro['unidade']);
+                    array_push($unidades, $unidade);
+                } else {
+                    throw new Exception("Erro: Campo 'unidade' não pode ser nulo ou vazio.");
+                }
+            } else {
+                throw new Exception("Erro: Campo 'unidade' não encontrado no banco de dados.");
+            }
+        }
+        return $unidades;
+    }
+}
 ?>

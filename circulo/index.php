@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include_once('quadrado.php');
+    include_once('circulo.php');
     
 ?>
 
@@ -9,12 +9,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quadrado</title>
+    <title>Círculo</title>
 </head>
 <body>
-    <h1>Crud do Quadrado</h1>
+    <h1>Crud do Círculo</h1>
     <h3><?= $msg ?></h3>
-    <a href="cadastro.php">Novo</a>
+    <a href="cadastrocir.php">Novo</a>
 
     <!-- Formulário de pesquisa -->
     <form action="" method="get">
@@ -26,7 +26,7 @@
             <select name="tipo" id="tipo">
                 <option value="0">Escolha</option>
                 <option value="1">Id</option>
-                <option value="2">Lado</option>
+                <option value="2">Raio</option>
                 <option value="3">Cor</option>
                 <option value="4">Unidade</option>
             </select>
@@ -48,13 +48,13 @@
         if (!empty($lista)) {
             foreach($lista as $forma) {
                 echo "<tr>
-                        <td>{$forma->getIdQuad()}</td>
-                        <td>{$forma->getLado()}</td>
+                        <td>{$forma->getIdCir()}</td>
+                        <td>{$forma->getRaio()}</td>
                         <td>{$forma->getCor()}</td>
                         <td>{$forma->getUnidade()->getUnidade()}</td>
                         <td>
-                            <a href='calcular.php?id_quad={$forma->getIdQuad()}&lado={$forma->getLado()}'>Visualizar</a> |
-                            <a href='cadastro.php?id_quad={$forma->getIdQuad()}'>Editar</a>
+                            <a href='calcular.php?id_cir={$forma->getIdCir()}&raio={$forma->getRaio()}'>Visualizar</a> |
+                            <a href='cadastrocir.php?id_cir={$forma->getIdCir()}'>Editar</a>
                         </td>
                     </tr>";
             }
