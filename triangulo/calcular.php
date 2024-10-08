@@ -67,7 +67,6 @@ require_once("../classes/triangulo1.class.php");
                 echo "<p>LadoC: " . $ladoC . " " . $unidade->getUnidade()."</p>";
                 echo "<p>Área: " . $area . " " . $unidade->getUnidade()."</p>";
                 echo "<p>Perímetro: " . $perimetro . " " . $unidade->getUnidade()."</p>";
-                // echo $triangulo->DesenharTriangulo();
             }
         }
         ?>

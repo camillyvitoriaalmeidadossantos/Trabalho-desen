@@ -23,13 +23,6 @@ abstract class Triangulo extends Formas{
         $this->setFundo($fundo);
     }
 
-    public function calcularArea() {
-        return $this->getLado() * $this->getLado();
-    }
-
-    public function calcularPerimetro() {
-        return 4 * $this->getLado();
-    }
     abstract public function setIdTri($novoIdTri);
     abstract public function setUnidade($novoUnidade);
     abstract public function setLadoA($novoLadoA);

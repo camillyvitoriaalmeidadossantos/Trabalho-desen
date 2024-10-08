@@ -17,6 +17,7 @@ require_once("../classes/Quadrado.class.php");
             padding: 20px;
             margin: 20px auto;
         }
+
     </style>
 </head>
 <body>

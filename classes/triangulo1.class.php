@@ -19,7 +19,7 @@ class Triangulo {
             $this->setLadoA($ladoA); 
         } else {
             throw new Exception("Erro: Lado A é nulo!");
-        }
+      }
 
         if ($ladoB !== null) {
             $this->setLadoB($ladoB); 
@@ -27,7 +27,7 @@ class Triangulo {
             throw new Exception("Erro: Lado B é nulo!");
         }
 
-        if ($ladoC !== null) {
+      if ($ladoC !== null) {
             $this->setLadoC($ladoC); 
         } else {
             throw new Exception("Erro: Lado C é nulo!");
@@ -91,7 +91,7 @@ class Triangulo {
     public function getLadoC() { return $this->ladoC; }
     public function getCor() { return $this->cor; }
 
-    public function incluir() {
+     public function incluir() {
         $sql = 'INSERT INTO Triangulo (id_un, ladoA, ladoB, ladoC, cor)
                 VALUES (:id_un, :ladoA, :ladoB, :ladoC, :cor)';
         $parametros = [
@@ -104,7 +104,7 @@ class Triangulo {
         Database::executar($sql, $parametros);
     }
 
-    public function excluir() {
+        public function excluir() {
         $sql = 'DELETE FROM Triangulo WHERE id_tri = :id_tri';
         $parametros = [
             ':id_tri' => $this->id_tri
@@ -112,7 +112,7 @@ class Triangulo {
         Database::executar($sql, $parametros);
     }
 
-    public function alterar() {
+        public function alterar() {
         $sql = 'UPDATE Triangulo 
                 SET cor = :cor, ladoA = :ladoA, ladoB = :ladoB, ladoC = :ladoC, id_un = :id_un
                 WHERE id_tri = :id_tri';
@@ -127,18 +127,18 @@ class Triangulo {
         Database::executar($sql, $parametros);
     }
 
-    public static function listar($tipo = 0, $busca = ""): array {
+        public static function listar($tipo = 0, $busca = ""): array {
         $sql = "SELECT * FROM Triangulo";
         $parametros = [];
 
-        if ($tipo > 0) {
-            switch($tipo) {
-                case 1: $sql .= " WHERE id_tri = :busca"; break;
-                case 2: $sql .= " WHERE ladoA LIKE :busca"; $busca = "%{$busca}%"; break;
-                case 3: $sql .= " WHERE ladoB LIKE :busca"; $busca = "%{$busca}%"; break;
-                case 4: $sql .= " WHERE ladoC LIKE :busca"; $busca = "%{$busca}%"; break;
-                case 5: $sql .= " WHERE cor LIKE :busca"; $busca = "%{$busca}%"; break;
-                case 6: $sql .= " WHERE id_un = :busca"; break;
+      if ($tipo > 0) {
+         switch($tipo) {
+             case 1: $sql .= " WHERE id_tri = :busca"; break;
+             case 2: $sql .= " WHERE ladoA LIKE :busca"; $busca = "%{$busca}%"; break;
+             case 3: $sql .= " WHERE ladoB LIKE :busca"; $busca = "%{$busca}%"; break;
+             case 4: $sql .= " WHERE ladoC LIKE :busca"; $busca = "%{$busca}%"; break;
+             case 5: $sql .= " WHERE cor LIKE :busca"; $busca = "%{$busca}%"; break;
+            case 6: $sql .= " WHERE id_un = :busca"; break;
             }
             $parametros = [':busca' => $busca];
         }
@@ -148,10 +148,10 @@ class Triangulo {
 
         while ($registro = $comando->fetch(PDO::FETCH_ASSOC)) {
 
-            if (isset($registro['id_un'], $registro['ladoA'], $registro['ladoB'], $registro['ladoC'], $registro['cor'])) {
-                $unidade = new unidade($registro['id_un']); 
-                $triangulo = new Triangulo($registro['id_tri'], $registro['ladoA'], $registro['ladoB'], $registro['ladoC'], $registro['cor'], $unidade);
-                array_push($formas, $triangulo);
+    if (isset($registro['id_un'], $registro['ladoA'], $registro['ladoB'], $registro['ladoC'], $registro['cor'])) {
+       $unidade = new unidade($registro['id_un']); 
+          $triangulo = new Triangulo($registro['id_tri'], $registro['ladoA'], $registro['ladoB'], $registro['ladoC'], $registro['cor'], $unidade);
+        array_push($formas, $triangulo);
             } else {
                 throw new Exception("Erro: Dados do triângulo inválidos!");
             }
@@ -172,7 +172,12 @@ class Triangulo {
 
     public function DesenharTriangulo() {
         return "
-        <div style='width: 0; height: 0; border-left: {$this->ladoA}px solid transparent; border-right: {$this->ladoA}px solid transparent; border-bottom: {$this->ladoB}px solid {$this->cor};'></div>
+        <div 
+        style='width: 0; 
+        height: 0;
+        border-left: {$this->ladoB}px solid transparent; 
+        border-right: {$this->ladoC}px solid transparent; 
+        border-bottom: {$this->ladoA}px solid {$this->cor};'></div>
         ";
     }
 }

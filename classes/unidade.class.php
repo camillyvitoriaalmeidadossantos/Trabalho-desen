@@ -8,7 +8,7 @@ class unidade {
     // Construtor
     public function __construct($id_un = 0, $unidade = "null") {
         $this->setIdUn($id_un);
-        $this->setUnidade($unidade); // Isso pode gerar um erro se $unidade for null
+        $this->setUnidade($unidade); 
     }
 
     // Setters
@@ -28,7 +28,7 @@ class unidade {
         }
     }
 
-    // Getters
+    
     public function getIdUn() { 
         return $this->id_un;
     }
@@ -37,21 +37,21 @@ class unidade {
         return $this->unidade;
     }
 
-    // Método para incluir nova unidade
+   
     public function incluir() {
         $sql = 'INSERT INTO unidade (unidade) VALUES (:unidade)';
         $parametros = array(':unidade' => $this->getUnidade());
         Database::executar($sql, $parametros);
     }
 
-    // Método para excluir unidade
     public function excluir() {
-        $sql = 'DELETE FROM unidade WHERE id_un = :id_un';
+        $sql = 'DELETE 
+                FROM unidade 
+                WHERE id_un = :id_un';
         $parametros = array(':id_un' => $this->getIdUn());
         return Database::executar($sql, $parametros);
     }
 
-    // Método para alterar unidade
     public function alterar() {
         $sql = 'UPDATE unidade SET unidade = :unidade WHERE id_un = :id_un';
         $parametros = array(
@@ -62,7 +62,6 @@ class unidade {
         return true;
     }
 
-    // Método para listar unidades
     public static function listar($tipo = 0, $busca = "") {
         $sql = "SELECT * FROM unidade";
         $parametros = array();
@@ -81,13 +80,11 @@ class unidade {
             }
         }
 
-        // Executa a query e coleta os resultados
         $comando = Database::executar($sql, $parametros);
         $unidades = array();
         
         while ($registro = $comando->fetch(PDO::FETCH_ASSOC)) {
             if (isset($registro['unidade'])) {
-                // Aqui garantimos que o valor não é nulo
                 if (!is_null($registro['unidade']) && $registro['unidade'] !== "") {
                     $unidade = new unidade($registro['id_un'], $registro['unidade']);
                     array_push($unidades, $unidade);

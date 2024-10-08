@@ -2,18 +2,18 @@
 require_once("../classes/Database.class.php");
 require_once("../classes/unidade.class.php");
 require_once("../classes/formas.class.php");
-require_once("../classes/triangulo.class.php");
+// require_once("../classes/triangulo.class.php");
 
-class Isosceles extends Triangulo{
-    private $id_tri;
+ class Isosceles{
+    private $id_is;
     private $ladoA;
     private $ladoB;
     private $ladoC;
     private $cor;
     private $unidade;
 
-    public function __construct($id_tri = 0, $ladoA = 0,$ladoB = 0,$ladoC = 0, $cor = "", unidade $unidade) { 
-        $this->setIdTri($id_tri);
+    public function __construct($id_is = 0, $ladoA = 0,$ladoB = 0,$ladoC = 0, $cor = "", unidade $unidade) { 
+        $this->setIdIs($id_is);
         $this->setUnidade($unidade);
         $this->setLadoA($ladoA); 
         $this->setLadoB($ladoB); 
@@ -21,11 +21,11 @@ class Isosceles extends Triangulo{
         $this->setCor($cor);
     }
 
-    public function setIdTri($novoIdTri) { 
-        if ($novoIdTri < 0) {
+    public function setIdIs($novoIdIs) { 
+        if ($novoIdIs < 0) {
             throw new Exception("Erro: ID inválido!");
         } else {
-            $this->id_tri = $novoIdTri; 
+            $this->id_is = $novoIdIs; 
         }
     }
 
@@ -67,7 +67,7 @@ class Isosceles extends Triangulo{
         }
     }
 
-    public function getIdTri() { return $this->id_tri; }
+    public function getIdIs() { return $this->id_is; }
     public function getUnidade() { return $this->unidade; }
     public function getLadoA() { return $this->ladoA; }
     public function getLadoB() { return $this->ladoB; }
@@ -75,7 +75,7 @@ class Isosceles extends Triangulo{
     public function getCor() { return $this->cor; }
 
     public function incluir() {
-        $sql = 'INSERT INTO Triangulo (id_un, ladoA, ladoB, ladoC, cor)
+        $sql = 'INSERT INTO Isosceles (id_un, ladoA, ladoB, ladoC, cor)
                 VALUES (:id_un, :ladoA, :ladoB, :ladoC, :cor)';
         $parametros = [
             ':id_un' => $this->unidade->getIdUn(),
@@ -88,19 +88,19 @@ class Isosceles extends Triangulo{
     }
 
     public function excluir() {
-        $sql = 'DELETE FROM Triangulo WHERE id_tri = :id_tri';
+        $sql = 'DELETE FROM Isosceles WHERE id_is = :id_is';
         $parametros = [
-            ':id_tri' => $this->id_tri
+            ':id_is' => $this->id_is
         ];
         Database::executar($sql, $parametros);
     }
 
     public function alterar() {
-        $sql = 'UPDATE Triangulo 
+        $sql = 'UPDATE Isosceles 
                    SET cor = :cor, ladoA = :ladoA, ladoB = :ladoB, ladoC = :ladoC ,id_un = :id_un
-                 WHERE id_tri = :id_tri';
+                 WHERE id_is = :id_is';
         $parametros = [
-            ':id_tri' => $this->id_tri,
+            ':id_is' => $this->id_is,
             ':cor' => $this->cor,
             ':ladoA' => $this->ladoA,
             ':ladoB' => $this->ladoB,
@@ -111,12 +111,12 @@ class Isosceles extends Triangulo{
     }
 
     public static function listar($tipo = 0, $busca = "") {
-        $sql = "SELECT * FROM Triangulo";
+        $sql = "SELECT * FROM Isosceles";
         $parametros = [];
 
         if ($tipo > 0) {
             switch($tipo) {
-                case 1: $sql .= " WHERE id_tri = :busca"; break;
+                case 1: $sql .= " WHERE id_is = :busca"; break;
                 case 2: $sql .= " WHERE ladoA LIKE :busca"; $busca = "%{$busca}%"; break;
                 case 3: $sql .= " WHERE ladoB LIKE :busca"; $busca = "%{$busca}%"; break;
                 case 4: $sql .= " WHERE ladoC LIKE :busca"; $busca = "%{$busca}%"; break;
@@ -129,11 +129,6 @@ class Isosceles extends Triangulo{
         $comando = Database::executar($sql, $parametros);
         $formas = [];
 
-        while ($registro = $comando->fetch(PDO::FETCH_ASSOC)) {
-            $unidade = new unidade($registro['id_un']); // Criar objeto Unidade
-            $triangulo = new Triangulo($registro['id_tri'], $registro['ladoA'], $registro['ladoB'], $registro['ladoC'], $registro['cor'], $unidade);
-            array_push($formas, $triangulo);
-        }
         return $formas;
         public function calcularArea() {
           $sp = (parent::getLadoA() + parent::getLadoB() + parent::getLadoC()) / 2;
@@ -146,7 +141,7 @@ class Isosceles extends Triangulo{
         }
     }
 
-    public function Desenhar() {
+    public function DesenharIsosceles() {
         return "<div style='display:block; width:{$this->lado}px; height:{$this->lado}px; background-color:{$this->cor}'></div>";
     }
 }
