@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $unidade->alterar();
             else                     
                 $unidade->incluir();
-            
+
         }elseif ($acao == 'excluir'){
            $unidade->excluir();
         }
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         header('location: index.php?MSG='.$e->getMessage()); 
     }
 }elseif($_SERVER['REQUEST_METHOD'] == 'GET'){ 
-    $id_un =  isset($_GET['id_un'])?$_GET['id_un']:0;
+    $id_un =  isset($_GET['id'])?$_GET['id']:0;
     $msg =  isset($_GET['MSG'])?$_GET['MSG']:"";
     if ($id_un > 0){
         $unidade = unidade::listar(1,$id_un)[0]; 
