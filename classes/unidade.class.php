@@ -5,13 +5,11 @@ class unidade {
     private $id_un;
     private $unidade;
 
-    // Construtor
     public function __construct($id_un = 0, $unidade = "null") {
         $this->setIdUn($id_un);
         $this->setUnidade($unidade); 
     }
 
-    // Setters
     public function setIdUn($novoIdUn) {
         if ($novoIdUn < 0) {
             throw new Exception("Erro: id inválido!");
@@ -53,7 +51,9 @@ class unidade {
     }
 
     public function alterar() {
-        $sql = 'UPDATE unidade SET unidade = :unidade WHERE id_un = :id_un';
+        $sql = 'UPDATE unidade
+         SET unidade = :unidade
+        WHERE id_un = :id_un';
         $parametros = array(
             ':id_un' => $this->getIdUn(),
             ':unidade' => $this->getUnidade()

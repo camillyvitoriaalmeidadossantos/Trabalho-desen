@@ -16,7 +16,6 @@
     <h3><?= $msg ?></h3>
     <a href="cadastro.php">Novo</a>
 
-    <!-- Formulário de pesquisa -->
     <form action="" method="get">
         <fieldset>
             <legend>Pesquisa</legend>

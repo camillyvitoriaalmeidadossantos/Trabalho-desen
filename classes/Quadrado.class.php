@@ -62,6 +62,7 @@ class Quadrado {
             ':lado' => $this->lado,
             ':cor' => $this->cor
         ];
+        
         Database::executar($sql, $parametros);
     }
 
@@ -106,15 +107,15 @@ class Quadrado {
         $formas = [];
 
         while ($registro = $comando->fetch(PDO::FETCH_ASSOC)) {
-            $unidade = new unidade($registro['id_un']); // Criar objeto Unidade
+            $unidade = new unidade($registro['id_un']); 
             $quadrado = new Quadrado($registro['id_quad'], $registro['lado'], $registro['cor'], $unidade);
             array_push($formas, $quadrado);
         }
         return $formas;
     }
 
-    public function Desenhar() {
-        return "<div style='width: {$this->lado}px; height: {$this->lado}px; background-color: #007bff; display: inline-block; margin: 20px;'></div>";
+    public function desenhar() {
+        return "<div style='width: {$this->lado}px; height: {$this->lado}px; background-color: {$this->cor}; display: inline-block; margin: 20px;'></div>";
     }
     public function calcularArea() {
         return $this->getLado() * $this->getLado();

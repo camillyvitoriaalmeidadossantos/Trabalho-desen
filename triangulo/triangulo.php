@@ -25,7 +25,7 @@ require_once("../classes/unidade.class.php");
             else 
                 $resultado = $triangulo->incluir();
 
-            }elseif ($acao == 'excluir'){ //excluindo
+            }elseif ($acao == 'excluir'){ 
                 $resultado = $triangulo->excluir();
             }
             $_SESSION['MSG'] = "Dados inseridos/Alterados com sucesso!";
@@ -46,8 +46,7 @@ require_once("../classes/unidade.class.php");
    
             if ($id_tri > 0){
                 $forma = Triangulo::listar(1,$id_tri)[0];                                          
-            }
-            
+            }  
                 $busca =  isset($_GET['busca']) ? $_GET['busca']:0; 
                 $tipo =  isset($_GET['tipo']) ? $_GET['tipo']:0; 
                 $lista = Triangulo::listar($tipo,$busca);

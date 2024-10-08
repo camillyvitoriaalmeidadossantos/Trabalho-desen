@@ -65,6 +65,8 @@ abstract class Formas {
     abstract public function alterar();
     abstract public static function listar($tipo = 0, $busca = ""): array;
     abstract public function desenhar();
+    abstract public function DesenharCirculo();
+    abstract public function DesenharTriangulo();
     abstract public function calcularArea();
     abstract public function calcularPerimetro();
 }

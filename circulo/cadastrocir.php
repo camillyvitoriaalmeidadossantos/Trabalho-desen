@@ -8,18 +8,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Quadrados</title>
+    <title>Cadastro de Circulos</title>
 </head>
 <body>
-    <h1>CRUD de Quadrados</h1>
+    <h1>CRUD de Círculos</h1>
     <h3><?=$msg?></h3>
     <form action="circulo.php" method="post" enctype="multipart/form-data">
         <fieldset>
-            <legend>Cadastro de Quadrado</legend>        
+            <legend>Cadastro de Círculos</legend>        
             <fieldset>
-                <legend>Dados do Quadrado</legend>        
-                    <label for="id">Id:</label>
-                    <input type="text" name="id" id="id" value="<?=isset($forma)?$forma->getIdQuad():0 ?>" readonly>
+                <legend>Dados do Círculo</legend>        
+                    <label for="id_cir">Id:</label>
+                    <input type="text" name="id_cir" id="id_cir" value="<?=isset($forma)?$forma->getIdCir():0 ?>" readonly>
                     <label for="raio">Raio:</label>
                     <input type="text" name="raio" id="raio" value="<?php if(isset($forma)) echo $forma->getRaio()?>">
                     <label for="cor">cor:</label>

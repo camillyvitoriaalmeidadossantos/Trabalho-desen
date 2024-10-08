@@ -1,7 +1,7 @@
 <?php
     session_start();
     include_once('triangulo.php');
-    
+
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +16,6 @@
     <h3><?= $msg ?></h3>
     <a href="./cadastrotri.php">Novo</a>
 
-    <!-- Formulário de pesquisa -->
     <form action="" method="get">
         <fieldset>
             <legend>Pesquisa</legend>
@@ -43,7 +42,6 @@
             <th>LadoA</th>
             <th>LadoB</th>
             <th>LadoC</th>
-            <!-- <th>Tamanho</th> -->
             <th>Cor</th>
             <th>Un</th>
             <th>Alterar</th>
@@ -52,7 +50,7 @@
         <?php
         if (!empty($lista)) {
             foreach($lista as $forma) {
-                echo "<tr>
+         echo "<tr>
         <td>{$forma->getIdTri()}</td>
         <td>{$forma->getLadoA()}</td>
         <td>{$forma->getLadoB()}</td>

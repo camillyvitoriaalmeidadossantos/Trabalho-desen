@@ -23,7 +23,7 @@ require_once("../classes/unidade.class.php");
             else 
                 $resultado = $quadrado->incluir();
 
-            }elseif ($acao == 'excluir'){ //excluindo
+            }elseif ($acao == 'excluir'){ 
                 $resultado = $quadrado->excluir();
             }
             $_SESSION['MSG'] = "Dados inseridos/Alterados com sucesso!";
@@ -36,7 +36,7 @@ require_once("../classes/unidade.class.php");
             header('location: index.php');
        }
          }elseif($_SERVER['REQUEST_METHOD'] == 'GET'){ 
-            $id_quad =  isset($_GET['id_tri'])?$_GET['id_tri']:0; 
+            $id_quad =  isset($_GET['id_quad'])?$_GET['id_quad']:0; 
             $msg = (isset($_SESSION['MSG'])?$_SESSION['MSG']:"");
             if ($msg != ""){
                 echo "<h2>{$msg}</h2>";

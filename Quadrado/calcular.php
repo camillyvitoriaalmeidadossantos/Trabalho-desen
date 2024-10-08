@@ -17,7 +17,6 @@ require_once("../classes/Quadrado.class.php");
             padding: 20px;
             margin: 20px auto;
         }
-
     </style>
 </head>
 <body>
@@ -29,7 +28,7 @@ require_once("../classes/Quadrado.class.php");
             $formas = Quadrado::listar(1, $id_quad);
             if (!empty($formas)) {
                 $forma = $formas[0];
-                echo $forma->Desenhar();
+                echo $forma->desenhar();
             } else {
                 echo "<p>Quadrado não encontrado.</p>";
             }
@@ -40,13 +39,12 @@ require_once("../classes/Quadrado.class.php");
         <h2>Cálculo de Área e Perímetro</h2>
         <form method="post">
             <input type="hidden" name="lado" value="<?php echo isset($forma) ? $forma->getLado() : 0; ?>">
-            <input type="hidden" name="cor" value="<?php echo isset($forma) ? $forma->getCor() : '#000000'; ?>"> <!-- Adicionando o campo para cor -->
             <input type="submit" value="Calcular">
         </form>
 
         <?php
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $lado = isset($_POST['lado']) ? $_POST['lado'] : 0; 
+             $lado = isset($_POST['lado']) ? $_POST['lado'] : 0; 
              $cor = isset($_POST['cor']) ? $_POST['cor'] : '#000000';
 
             if ($lado <= 0) {

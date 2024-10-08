@@ -7,7 +7,7 @@ include_once('unidade.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Unidade Medido</title>
+    <title>Cadastro de Unidade de Medida</title>
 </head>
 <body>
     <h1>Cadastro de Unidade de Medida</h1>
@@ -21,7 +21,6 @@ include_once('unidade.php');
         <button type='reset'>Cancelar</button>
     </form>
 
-   <!-- Formulário de pesquisa -->
    <form action="" method="get">
         <fieldset>
             <legend>Pesquisa</legend>

@@ -1,7 +1,9 @@
 <?php  
     session_start();
     include_once('quadrado.php'); 
+    // var_dump($forma);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,8 +20,8 @@
             <legend>Cadastro de Quadrado</legend>        
             <fieldset>
                 <legend>Dados do Quadrado</legend>        
-                    <label for="id">Id:</label>
-                    <input type="text" name="id" id="id" value="<?=isset($forma)?$forma->getIdQuad():0 ?>" readonly>
+                    <label for="id_quad">Id:</label>
+                    <input type="text" name="id_quad" id="id_quad" value="<?=isset($forma)?$forma->getIdQuad():0 ?>" readonly>
                     <label for="lado">Lado:</label>
                     <input type="text" name="lado" id="lado" value="<?php if(isset($forma)) echo $forma->getLado()?>">
                     <label for="cor">cor:</label>

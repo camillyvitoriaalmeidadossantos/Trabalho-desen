@@ -105,7 +105,9 @@ class Triangulo {
     }
 
         public function excluir() {
-        $sql = 'DELETE FROM Triangulo WHERE id_tri = :id_tri';
+        $sql = 'DELETE 
+                FROM Triangulo
+                WHERE id_tri = :id_tri';
         $parametros = [
             ':id_tri' => $this->id_tri
         ];
@@ -138,7 +140,7 @@ class Triangulo {
              case 3: $sql .= " WHERE ladoB LIKE :busca"; $busca = "%{$busca}%"; break;
              case 4: $sql .= " WHERE ladoC LIKE :busca"; $busca = "%{$busca}%"; break;
              case 5: $sql .= " WHERE cor LIKE :busca"; $busca = "%{$busca}%"; break;
-            case 6: $sql .= " WHERE id_un = :busca"; break;
+             case 6: $sql .= " WHERE id_un = :busca"; break;
             }
             $parametros = [':busca' => $busca];
         }
@@ -149,9 +151,9 @@ class Triangulo {
         while ($registro = $comando->fetch(PDO::FETCH_ASSOC)) {
 
     if (isset($registro['id_un'], $registro['ladoA'], $registro['ladoB'], $registro['ladoC'], $registro['cor'])) {
-       $unidade = new unidade($registro['id_un']); 
+          $unidade = new unidade($registro['id_un']); 
           $triangulo = new Triangulo($registro['id_tri'], $registro['ladoA'], $registro['ladoB'], $registro['ladoC'], $registro['cor'], $unidade);
-        array_push($formas, $triangulo);
+     array_push($formas, $triangulo);
             } else {
                 throw new Exception("Erro: Dados do triângulo inválidos!");
             }
@@ -172,13 +174,10 @@ class Triangulo {
 
     public function DesenharTriangulo() {
         return "
-        <div 
-        style='width: 0; 
-        height: 0;
-        border-left: {$this->ladoB}px solid transparent; 
-        border-right: {$this->ladoC}px solid transparent; 
-        border-bottom: {$this->ladoA}px solid {$this->cor};'></div>
-        ";
+        <div style='width: 0; height: 0;
+         border-left: {$this->ladoB}px solid transparent; 
+         border-right: {$this->ladoC}px solid transparent; 
+         border-bottom: {$this->ladoA}px solid {$this->cor};'></div>";
     }
 }
 ?>

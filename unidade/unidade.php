@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $unidade->alterar();
             else                     
                 $unidade->incluir();
+            
         }elseif ($acao == 'excluir'){
            $unidade->excluir();
         }

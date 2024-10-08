@@ -54,7 +54,8 @@ class Circulo {
     public function getCor() { return $this->cor; }
 
     public function incluir() {
-        $sql = 'INSERT INTO Circulo (id_un, raio, cor)
+        $sql = 'INSERT 
+                INTO Circulo (id_un, raio, cor)
                 VALUES (:id_un, :raio, :cor)';
         $parametros = [
             ':id_un' => $this->unidade->getIdUn(),
@@ -103,7 +104,7 @@ class Circulo {
         $formas = [];
 
         while ($registro = $comando->fetch(PDO::FETCH_ASSOC)) {
-            $unidade = new unidade($registro['id_un']); // Criar objeto Unidade
+            $unidade = new unidade($registro['id_un']); 
             $circulo = new Circulo($registro['id_cir'], $registro['raio'], $registro['cor'], $unidade);
             array_push($formas, $circulo);
         }

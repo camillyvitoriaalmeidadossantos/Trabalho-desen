@@ -30,7 +30,7 @@
             vertical-align: top; 
         }
         .filtri {
-            display: inline-block; /* Permite que os fieldsets fiquem lado a lado */
+            display: inline-block; 
             width: 230px; 
             border: 2px solid pink; 
             padding: 24px; 
